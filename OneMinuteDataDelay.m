@@ -1,0 +1,24 @@
+%function [] = nartestwithfints()
+clear;
+hour = 0.25;
+commis = 0.006;
+symboltotrain = 'AUDUSD`15.csv';
+OpenCell = ReadTimeSeries(symboltotrain,commis);
+sizeofOpenCell = size(OpenCell(2,:));
+OpenCell = OpenCell(:,sizeofOpenCell(2)-10000:sizeofOpenCell(2));
+[adftestOfSymbol,vratiotestOfSymbol,halflifeofSymbol] = StatTests(OpenCell);
+[bestnet,bestmcoofsymbol,bestsizeofsymbol,bestdelay] = TrainDelayTimeSeries(OpenCell,commis,hour);
+[sharpeRatio,kelly,maximumdrawdown,CashArray,dailywin] = SimulateTimeSeries(OpenCell,bestnet,bestmcoofsymbol,commis,hour);
+ListofProfits{1} = sharpeRatio;
+ListofProfits{2} = bestmcoofsymbol;
+ListofProfits{3} = bestnet;
+ListofProfits{4} = bestsizeofsymbol;
+ListofProfits{5} = CashArray;
+ListofProfits{6} = symboltotrain;    
+ListofProfits{7} = halflifeofSymbol;
+ListofProfits{8} = adftestOfSymbol;
+ListofProfits{9} = vratiotestOfSymbol;
+ListofProfits{10} = maximumdrawdown;
+ListofProfits{11} = kelly;
+ListofProfits{12} = dailywin;
+ListofProfits{13} = bestdelay;
